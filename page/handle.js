@@ -4,7 +4,7 @@ show = function(){
   args = slice$.call(arguments);
   return console.log.apply(console, args);
 };
-socket = new WebSocket('ws://192.168.1.104:8000');
+socket = new WebSocket('ws://jiyinyiyong.info:3011');
 query = function(it){
   return document.querySelector(it);
 };

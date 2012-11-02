@@ -1,6 +1,6 @@
 
 show = (...args) -> console.log.apply console, args
-socket = new WebSocket \ws://192.168.1.104:3011
+socket = new WebSocket \ws://jiyinyiyong.info:3011
 
 query = -> document.querySelector it
 all = -> document.querySelectorAll it
