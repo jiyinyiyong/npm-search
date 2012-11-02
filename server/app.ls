@@ -6,8 +6,8 @@ repeat = -> setInterval &1, &0
 delay = -> setTimeout &1, &0
 show = -> console.log
 
-# data-url = \http://registry.npmjs.org/-/all
-data-url = \http://up/npm-search/server/data.json
+data-url = \http://registry.npmjs.org/-/all
+# data-url = \http://up/npm-search/server/data.json
 data = {}
 list = []
 
