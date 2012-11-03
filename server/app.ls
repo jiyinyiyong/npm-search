@@ -30,7 +30,7 @@ make-data = ->
       show \refresh
 
 make-data!
-repeat (3600 * 24 * 1000), make-data
+repeat (3600 * 6 * 1000), make-data
 
 make-list = ->
   try regex = RegExp it
