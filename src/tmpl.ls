@@ -4,7 +4,7 @@ tmpl = ->
   isObj = ->
     rule1 = typeof it \object
     rule2 = isArr it
-    rule1 and (not rul22)
+    rule1 and (not rule2)
   isStr = -> typeof it is \string
 
   show = ->

@@ -30,6 +30,11 @@ body {
   font-size: 20px;
   padding-left: 10px;
 }
+#nav #time {
+  font-size: 10px;
+  margin: 20px 0px;
+  color: #808080;
+}
 #list {
   width: 70%;
   float: right;

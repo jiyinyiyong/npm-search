@@ -1,6 +1,7 @@
 
 show = (...args) -> console.log.apply console, args
-socket = new WebSocket \ws://jiyinyiyong.info:3011
+host = location.host
+socket = new WebSocket "ws://#host:3011"
 
 query = -> document.querySelector it
 all = -> document.querySelectorAll it
@@ -27,7 +28,6 @@ card = ->
       ".description": intro
       ".time": time
 
-
   tmpl json
 
 window.onload = ->
@@ -37,21 +37,34 @@ window.onload = ->
     if it.keyCode is 13
       box.select!
       word = query \#box .value
-      socket.send word
-  socket.onopen = -> socket.send \nodejs
+      localStorage.query = word
+      socket.send JSON.stringify type: \query, data: word
+  socket.onopen = ->
+    show \onopen
+    word = if localStorage.query? then that else \nodejs
+    box .value = word
+    box.select!
+    socket.send JSON.stringify type: \query, data: word
 
   box.onmouseover = -> box.select!
   # all \a .click -> socket.close!
 
 socket.onmessage = ->
   # show \message, it.data
-  list = JSON.parse it.data
-  list-elem = query \#list
-  list-elem.innerHTML = ''
-  html = ''
-  list.forEach (module) ->
-    # show module
-    if module?
-      piece = card module
-      html += piece
-  list-elem.innerHTML = html
+  res = JSON.parse it.data
+  # show it.data
+  if res.type is \time
+    time = new Date res.data
+    query \#time .innerText = time.toString!
+  else if res.type is \query
+    list =  res.data
+    # show res.data
+    list-elem = query \#list
+    list-elem.innerHTML = ''
+    html = ''
+    list.forEach (module) ->
+      # show module
+      if module?
+        piece = card module
+        html += piece
+    list-elem.innerHTML = html

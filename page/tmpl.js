@@ -6,7 +6,7 @@ tmpl = function(it){
     var rule1, rule2;
     rule1 = typeof it('object');
     rule2 = isArr(it);
-    return rule1 && !rul22;
+    return rule1 && !rule2;
   };
   isStr = function(it){
     return typeof it === 'string';
