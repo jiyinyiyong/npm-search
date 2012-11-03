@@ -2,13 +2,14 @@
 require! \ws
 require! \http
 require! \fs
+require! \path
 
 repeat = -> setInterval &1, &0
 delay = -> setTimeout &1, &0
 show = console.log
 
 data-url = \http://registry.npmjs.org/-/all
-# data-url = \http://up/npm-search/server/data.json
+# data-url = \http://localhost/npm-search/server/data.json
 data = {}
 list = []
 time = ''
@@ -21,7 +22,7 @@ make-data = ->
     res.on \data (piece) -> str += piece
     res.on \end ->
       show \end
-      fs.write-file \server/data.json str
+      fs.write-file (path.join __dirname, \data.json), str
       data := JSON.parse str
       time := new Date!.getTime!
       delete data._updated
