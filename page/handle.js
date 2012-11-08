@@ -47,7 +47,7 @@ card = function(it){
   }
   json = {
     ".module": {
-      ".line": (ref$ = {}, ref$["a.name href='" + moduleUrl + "'"] = moduleName, ref$["span.auther"] = authorName, ref$),
+      ".line": (ref$ = {}, ref$["a.name href='" + moduleUrl + "' target='_blank'"] = moduleName, ref$["span.auther"] = authorName, ref$),
       ".description": intro,
       ".time": time
     }

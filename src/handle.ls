@@ -23,7 +23,7 @@ card = ->
   json =
     ".module":
       ".line":
-        "a.name href='#{module-url}'": module-name
+        "a.name href='#{module-url}' target='_blank'": module-name
         "span.auther": author-name
       ".description": intro
       ".time": time
