@@ -14,14 +14,14 @@ data-url = \http://registry.npmjs.org/-/all
 # data-url = \http://localhost/npm-search/server/data.json
 time = ''
 
-make-data = ->
+do make-data = ->
   # show 'make data'
   time := new Date!.getTime!
   delay (3600 * 6 * 1000), make-data
   exec "rm data.json"  
 
   req = http.get data-url, (res) ->
-    res.on \data -> show it
+    # res.on \data -> show it
     res.on \end -> show "end"
     res.on "error", show
     res.pipe (fs.createWriteStream \data.json)
