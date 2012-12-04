@@ -1,6 +1,7 @@
 
 show = (...args) -> console.log.apply console, args
-host = location.host
+# host = location.host
+host = "jiyinyiyong.info"
 socket = new WebSocket "ws://#host:3011"
 
 query = -> document.querySelector it

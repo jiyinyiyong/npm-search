@@ -4,7 +4,7 @@ show = function(){
   args = slice$.call(arguments);
   return console.log.apply(console, args);
 };
-host = location.host;
+host = "jiyinyiyong.info";
 socket = new WebSocket("ws://" + host + ":3011");
 query = function(it){
   return document.querySelector(it);

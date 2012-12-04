@@ -7,42 +7,24 @@ require! \path
 repeat = -> setInterval &1, &0
 delay = -> setTimeout &1, &0
 show = console.log
+{exec} = require \child_process
 
 data-url = \http://registry.npmjs.org/-/all
+# data-url = \http://registry.npmjs.vitecho.com/-/all
 # data-url = \http://localhost/npm-search/server/data.json
-data = {}
-list = []
 time = ''
 
 make-data = ->
-  show 'make data'
-  http.get data-url, (res) ->
-    show 'response'
-    str = ''
-    res.on \data (piece) -> str += piece
-    res.on \end ->
-      show \end
-      fs.write-file (path.join __dirname, \data.json), str
-      data := JSON.parse str
-      time := new Date!.getTime!
-      delete data._updated
-      list := []
-      for key of data then list.push key
-      show \refresh
+  # show 'make data'
+  time := new Date!.getTime!
+  delay (3600 * 6 * 1000), make-data
+  exec "rm data.json"  
 
-make-data!
-repeat (3600 * 6 * 1000), make-data
-
-make-list = ->
-  try regex = RegExp it
-  catch e then regex = /wrong/
-  result = []
-  for module in list
-    if regex.test module
-      result.push data[module]
-  result.splice 0 40
-
-# delay 2000 -> show make-list \mongo
+  req = http.get data-url, (res) ->
+    res.on \data -> show it
+    res.on \end -> show "end"
+    res.on "error", show
+    res.pipe (fs.createWriteStream \data.json)
 
 wss = new ws.Server host: \0.0.0.0, port: 3011
 
@@ -50,10 +32,27 @@ wss.on \connection, (socket) ->
   show \connection
   socket.send JSON.stringify type: \time, data: time
   socket.on \message (message) ->
-    show message
+    # show message
     msg = JSON.parse message
     type = msg.type
-    if type is \query
-      data = type: \query, data: (make-list msg.data)
-      socket.send JSON.stringify data
-      # show msg
+    fs.readFile "data.json", "utf8", (err, file) ->
+      data = JSON.parse file
+      list = []
+      delete data._update
+      for key, value of data
+        list.push key, value
+        # show key
+      # show list.length, list[to 10]
+      if type is \query
+        try
+          regex = RegExp msg.data
+          # show \exp
+          result = []
+          for module in list
+            if result.length < 50
+              if regex.test module
+                result.push data[module]
+          # show "result" result
+          json = type: \query, data: result
+          socket.send JSON.stringify json
+        catch err then show err
